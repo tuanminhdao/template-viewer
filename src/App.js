@@ -1,25 +1,62 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [templates, setTemplates] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await axios.get('/api/templates');
+      setTemplates(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleThumbnailClick = (template) => {
+    setSelectedTemplate(template);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="main-window">
+        {selectedTemplate ? (
+          <>
+            <img
+              className="main-image"
+              src={`/images/large/${selectedTemplate.imageFileName}`}
+              alt={selectedTemplate.description}
+            />
+            <div className="metadata">
+              <p>ID: {selectedTemplate.id}</p>
+              <p>Cost: {selectedTemplate.cost}</p>
+              <p>Description: {selectedTemplate.description}</p>
+            </div>
+          </>
+        ) : (
+          <p className="no-image">No image selected</p>
+        )}
+      </div>
+      <div className="filmstrip">
+        {templates.map((template) => (
+          <img
+            key={template.id}
+            className={`thumbnail ${selectedTemplate === template ? 'selected' : ''}`}
+            src={`/images/thumbnails/${template.thumbnailFileName}`}
+            alt={template.description}
+            onClick={() => handleThumbnailClick(template)}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
+n

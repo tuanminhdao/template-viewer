@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "cost": 10,
+      "description": "Item 1",
+      "thumbnailFileName": "./public/images/small/7111-m.jpg",
+      "imageFileName": "./public/images/large/7111-b.jpg"
+    },
+    {
+      "id": 2,
+      "cost": 20,
+      "description": "Item 2",
+      "thumbnailFileName": "./public/images/small/7112-m.jpg",
+      "imageFileName": "./public/images/large/7112-b.jpg"
+    }
+
+  ]
+  
